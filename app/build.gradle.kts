@@ -62,6 +62,13 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
+    implementation("androidx.compose.material:material:1.5.0")
+
+
+    val nav_version = "2.7.0"
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
     //para las splashscreen
     implementation ("androidx.core:core-splashscreen:1.0.1")
 

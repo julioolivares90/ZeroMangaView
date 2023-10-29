@@ -27,28 +27,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.julioolivares90.zeromangaview.R
 import com.julioolivares90.zeromangaview.data.remote.models.Manga
+import com.julioolivares90.zeromangaview.navigation.Screen
 import com.julioolivares90.zeromangaview.ui.theme.Backgroundcoloramarillo
 import com.julioolivares90.zeromangaview.ui.theme.Backgroundcolorrojo
 import com.julioolivares90.zeromangaview.ui.theme.ColorNegroTransparente
 import com.julioolivares90.zeromangaview.utilidades.getTextFormated
 
 @Composable
-fun HomePage (viewModel: HomePageViewModel){
+fun HomePage (viewModel: HomePageViewModel,navHostController: NavHostController){
 
     Column {
-        layoutMainPage(viewModel)
+        layoutMainPage(viewModel,navHostController)
     }
 }
 
 @Composable
-fun layoutMainPage(viewModel: HomePageViewModel){
+fun layoutMainPage(viewModel: HomePageViewModel, navHostController: NavHostController){
     val mangaData = viewModel.state.value
 
-    ListManga(mangaList = mangaData.mangasPopulares, onClick = {viewModel.getDataFromRepository()})
+    ListManga(mangaList = mangaData.mangasPopulares, onClick = {navHostController.navigate(Screen.DetailPage.route)})
 }
 
 @Composable
@@ -76,7 +78,7 @@ fun MangaItem(manga: Manga,onClick : () -> Unit ){
         .width(300.dp)
         .height(450.dp)
         .padding(10.dp)
-        .clickable { onClick }, shape = MaterialTheme.shapes.medium) {
+        .clickable { onClick() }, shape = MaterialTheme.shapes.medium) {
         Box(contentAlignment =  Alignment.Center, modifier = Modifier
             .width(300.dp)
             .height(450.dp)){
@@ -98,7 +100,6 @@ fun MangaItem(manga: Manga,onClick : () -> Unit ){
                     contentScale = ContentScale.FillBounds,
                     placeholder = painterResource(id = R.drawable.ic_launcher_background)
                 )
-
 
                 Text(text = getTextFormated(manga.title), modifier = Modifier
                     .fillMaxWidth()
